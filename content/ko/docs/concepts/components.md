@@ -29,7 +29,7 @@ SDK와 도구가 필요하지 않게 된다.
 정의를 넘어, 명세는 다음 사항을 정의한다.
 
 - **API:** 트레이스, 메트릭, 로그 데이터를 생성하고 서로 연관 짓기 위한 데이터
-  타입과 오퍼레이션을 정의한다.
+  타입과 오퍼레이션(operation)을 정의한다.
 - **SDK:** API의 언어별 구현체에 대한 요구사항을 정의한다. 설정, 데이터 처리,
   내보내기(exporting) 개념도 여기서 정의된다.
 - **데이터:** 텔레메트리 백엔드가 지원할 수 있는 오픈텔레메트리
@@ -87,11 +87,11 @@ OTLP, Jaeger, Prometheus를 비롯해 다양한 상용/독점(commercial/proprie
 자세한 내용은 [제로 코드 계측](/docs/concepts/instrumentation/zero-code/)을
 참고한다.
 
-### 리소스 감지기(Resource Detectors) {#resource-detectors}
+### 리소스 감지기(Resource detectors) {#resource-detectors}
 
 [리소스](/docs/concepts/resources/)는 텔레메트리를 생성하는 엔터티를 리소스
 속성으로 나타낸다. 예를 들어, 쿠버네티스의 컨테이너에서 실행되며 텔레메트리를
-생성하는 프로세스에는 Pod 이름, 네임스페이스, 그리고 배포(deployment) 이름이
+생성하는 프로세스에는 Pod 이름과 네임스페이스가 있으며, 배포(deployment) 이름도
 있을 수 있다. 이러한 속성을 모두 리소스에 포함할 수 있다.
 
 오픈텔레메트리의 언어별 구현체는 `OTEL_RESOURCE_ATTRIBUTES` 환경 변수를 통해,
@@ -123,8 +123,8 @@ OTLP, Jaeger, Prometheus를 비롯해 다양한 상용/독점(commercial/proprie
 ## 쿠버네티스 오퍼레이터 {#kubernetes-operator}
 
 오픈텔레메트리 오퍼레이터(OpenTelemetry Operator)는 쿠버네티스
-오퍼레이터(Kubernetes Operator)의 구현체이다. 이 오퍼레이터는 오픈텔레메트리를
-사용하는 워크로드의 오픈텔레메트리 컬렉터와 자동 계측을 관리한다.
+오퍼레이터(Kubernetes Operator)의 구현체이다. 이 오퍼레이터는 오픈텔레메트리
+컬렉터와, 오픈텔레메트리를 사용하는 워크로드의 자동 계측을 관리한다.
 
 자세한 내용은 [K8s 오퍼레이터](/docs/platforms/kubernetes/operator/)를 참고한다.
 
