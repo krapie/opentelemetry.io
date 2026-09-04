@@ -17,10 +17,10 @@ default_lang_commit: d1ef521ee4a777881fb99c3ec2b506e068cdec4c
 
 ![제로 코드](./zero-code.svg)
 
-**제로 코드 계측(Zero-code instrumentation)** 은 일반적으로 에이전트(agent) 또는
+제로 코드 계측(Zero-code instrumentation)은 일반적으로 에이전트(agent) 또는
 에이전트와 유사한 설치 방식으로 오픈텔레메트리 API 및 SDK 기능을 애플리케이션에
 추가한다. 관련된 구체적인 메커니즘은 언어에 따라 다를 수 있으며, 바이트코드
-조작(bytecode manipulation), 몽키 패칭(monkey patching), eBPF 등을 통해
+조작(bytecode manipulation), 몽키 패칭(monkey patching), eBPF를 통해
 오픈텔레메트리 API 및 SDK에 대한 호출을 애플리케이션에 주입한다.
 
 일반적으로 제로 코드 계측은 사용 중인 라이브러리에 대한 계측을 추가한다. 즉

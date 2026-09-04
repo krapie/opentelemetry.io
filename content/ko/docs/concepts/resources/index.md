@@ -13,8 +13,8 @@ default_lang_commit: 8ada5a9b285dec6ce4cfa790c577ef1523920cd0
 
 ![트레이스와 연관된 리소스 속성의 출력 예시를 보여주는 Jaeger 스크린샷](screenshot-jaeger-resources.png)
 
-리소스는 `TracerProvider` 또는 `MetricProvider`가 초기화 중 생성될 때 여기에
-추가된다. 이 연관 관계는 이후에 변경할 수 없다. 리소스가 추가되고 나면, 해당
+리소스는 초기화 중 생성되는 `TracerProvider` 또는 `MetricProvider`에 추가된다.
+이 연관 관계는 이후에 변경할 수 없다. 리소스가 추가되고 나면, 해당
 프로바이더로부터 생성된 `Tracer`나 `Meter`가 만들어내는 모든 스팬과 메트릭에는
 그 리소스가 연관된다.
 
