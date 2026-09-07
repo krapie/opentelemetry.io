@@ -1,5 +1,6 @@
 {{ $color := .Get "color" | default "white" -}}
 {{ $image := .Get "image" -}}
+{{ if strings.HasPrefix $image "/" }}{{ $image = (strings.TrimPrefix "/" $image) | relURL }}{{ end -}}  {{/* subpath-aware: see layouts/_markup/render-image.html for why */}}
 {{ $imageAlt := .Get "imageAlt" -}}
 
 <section class="row td-box td-box--{{ $color }} intro-section">

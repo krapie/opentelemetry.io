@@ -1,4 +1,5 @@
 {{ $image := .Get "image" -}}
+{{ if strings.HasPrefix $image "/" }}{{ $image = (strings.TrimPrefix "/" $image) | relURL }}{{ end -}}  {{/* subpath-aware: see layouts/_markup/render-image.html for why */}}
 {{ $title := .Get "title" -}}
 {{ $url := .Get "url" -}}
 {{ $imagePosition := .Get "imagePosition" | default "left" -}}

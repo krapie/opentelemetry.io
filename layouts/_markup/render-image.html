@@ -1,0 +1,31 @@
+{{/*
+  Custom render-image hook.
+
+  Site images live under `static/img/` and are copied to the output root
+  verbatim by Hugo — they are not page resources or Hugo Assets, so they
+  can't be resolved via GetPage/resources.Get the way render-link.html
+  resolves content pages. Without this hook, Hugo's default image rendering
+  passes an absolute markdown image path (e.g. `/img/foo.svg`) straight
+  through with no baseURL awareness at all, which is fine when the site is
+  served from a domain root but breaks under any baseURL with a path prefix
+  (e.g. GitHub Pages project sites: https://user.github.io/repo/).
+
+  `relURL` is the right tool for this — pure string prefixing based on the
+  site's configured baseURL, unlike RelPermalink which requires an actual
+  Page or Resource object. One subtlety, verified against an isolated test
+  site: `relURL` treats a leading "/" as "already server-root-absolute" and
+  leaves it untouched — `relURL "/img/foo.svg"` stays `/img/foo.svg`, not
+  `/opentelemetry.io/img/foo.svg`. Only a path with the leading slash
+  stripped gets the baseURL path actually prepended:
+  `relURL "img/foo.svg"` → `/opentelemetry.io/img/foo.svg`. So strip it first.
+  Relative paths (that never had a leading "/") are left untouched, matching
+  render-link.html's handling of relative link targets.
+*/ -}}
+{{ $src := .Destination -}}
+{{ if strings.HasPrefix $src "/" -}}
+  {{ $src = (strings.TrimPrefix "/" $src) | relURL -}}
+{{ end -}}
+<img src="{{ $src }}"
+  {{- with .Text }} alt="{{ . }}"{{ end -}}
+  {{- with .Title }} title="{{ . }}"{{ end -}}
+>

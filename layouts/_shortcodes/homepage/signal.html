@@ -1,6 +1,7 @@
 {{ $name := .Get "name" -}}
 {{ $icon := .Get "icon" -}}
 {{ $image := .Get "image" -}}
+{{ if strings.HasPrefix $image "/" }}{{ $image = (strings.TrimPrefix "/" $image) | relURL }}{{ end -}}  {{/* subpath-aware: see layouts/_markup/render-image.html for why */}}
 {{ $url := .Get "url" -}}
 
 {{ $url = partial "func/render-link-href.html" (dict
