@@ -1,0 +1,96 @@
+name: Deploy ko site to GitHub Pages
+
+# Personal fork only: builds en+ko content and deploys to this fork's
+# GitHub Pages. Not part of upstream open-telemetry/opentelemetry.io.
+# See .claude/ko-localization-plan.md for the feasibility check this
+# workflow implements.
+
+on:
+  push:
+    branches: [ko/draft]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # full history; matches the repo's own CI recipe
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm run ci:min
+
+      # DEPTH overrides package.json's `_get:submodule` default of
+      # `--depth 999`, which can fail to reach a submodule's pinned commit if
+      # that submodule has moved far ahead (verified locally against
+      # content-modules/opentelemetry-java-instrumentation). An empty depth
+      # arg means a full, unbounded submodule fetch — slower, but reliable.
+      - name: Prebuild (submodules, spec content, config types)
+        run: npm run _prebuild
+        env:
+          DEPTH: ' '
+
+      # sass-embedded declares a `bin` entry that a normal `npm ci` should
+      # auto-link into node_modules/.bin/sass. This step is a defensive
+      # fallback in case that linking doesn't happen on this runner — Hugo
+      # hard-fails on `TOCSS-DART` without a `sass` binary on PATH, and the
+      # failure mode (silently missing CSS) is worse than a redundant PATH
+      # entry pointing at the same binary.
+      - name: Ensure Dart Sass is on PATH
+        run: |
+          if ! command -v sass >/dev/null; then
+            dir="$(find node_modules -maxdepth 2 -type d -name dart-sass | head -1)"
+            if [ -n "$dir" ]; then
+              echo "$PWD/$dir" >> "$GITHUB_PATH"
+              echo "Added $dir to PATH (no 'sass' bin found from npm's own linking)"
+            else
+              echo "::warning::No dart-sass found under node_modules — build will likely fail on TOCSS-DART"
+            fi
+          fi
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        id: pages
+
+      # en+ko only, per the feasibility check: docs-to-docs navigation is
+      # clean at the default project-Pages subpath once blog/specs/ecosystem/
+      # community/site are out of scope (21 residual broken links vs. 1,603
+      # for the full docs tree) — see the plan doc for the measurements.
+      # ${{ steps.pages.outputs.base_path }} makes this correct whether the
+      # fork ever moves to a custom domain (root path) or stays on the
+      # default subpath — no hardcoded URL.
+      - name: Build (en+ko only)
+        run: |
+          node_modules/.bin/hugo --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --destination ./_site
+        env:
+          HUGO_DISABLELANGUAGES: bn,es,fr,ja,pl,pt,ro,uk,zh
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        id: deployment
