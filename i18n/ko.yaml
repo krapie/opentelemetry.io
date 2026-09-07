@@ -1,0 +1,32 @@
+# Docsy overrides
+#
+# The vendored theme (themes/docsy) ships i18n/ko.yaml with these seven
+# `community_*` keys left as untranslated English placeholders (verified
+# 2026-09-07 against Docsy 0.17.0) — the same gap ja has never fixed. This
+# project-level file overrides only those keys; Hugo merges the rest of
+# Docsy's ko.yaml (alert labels, ui_* strings) unchanged.
+#
+# Wording for community_introduce/contribute/how_to/guideline matches this
+# project's own i18n/en.yaml customization, not Docsy's generic default —
+# so the Korean page says what the English page on this site actually says.
+
+# Community
+
+community_introduce: >-
+  {{ .Site.Title }}는 커뮤니티의 누구나 사용하고, 개선하고, 즐길 수 있는
+  오픈소스 프로젝트이다. 여러분의 참여를 기다린다!
+
+community_learn: 학습 및 교류
+
+community_using: >-
+  {{ .Site.Title }}를 사용 중이거나 사용하려고 하는가? 여기에서 더 자세히
+  알아본다.
+
+community_develop: 개발 및 기여
+
+community_contribute: >-
+  {{ .Site.Title }} 문서에 기여하는 방법을 알아보려면
+  [기여하기](/docs/contributing/)를 참고한다. 그 외 유용한 링크는 다음과 같다.
+
+community_how_to: 문서 스타일 가이드 등 자세한 내용은 다음을 참고한다.
+community_guideline: 기여하기
