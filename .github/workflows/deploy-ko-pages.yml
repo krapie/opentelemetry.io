@@ -35,12 +35,31 @@ jobs:
 
       - run: npm run ci:min
 
+      # ci:prepare does the real Hugo binary install (rebuild-hugo-extended.mjs
+      # — a plain `hugo --version` invocation otherwise lazily self-downloads
+      # a binary, which happened here on the first CI run and still isn't the
+      # intended path) and `npm run prepare`, which installs the Docsy theme's
+      # OWN dependencies into themes/docsy/theme/node_modules (Bootstrap SCSS
+      # among them). Skipping this step is what caused the first CI run's
+      # failure: `TOCSS-DART: ... Can't find stylesheet to import` on
+      # `../../vendor/bootstrap/scss/functions` — Bootstrap was never
+      # installed, not a sass-binary problem.
+      #
       # DEPTH overrides package.json's `_get:submodule` default of
-      # `--depth 999`, which can fail to reach a submodule's pinned commit if
-      # that submodule has moved far ahead (verified locally against
-      # content-modules/opentelemetry-java-instrumentation). An empty depth
-      # arg means a full, unbounded submodule fetch — slower, but reliable.
-      - name: Prebuild (submodules, spec content, config types)
+      # `--depth 999`, applied here because `prepare` also runs
+      # `get:submodule` internally. Without it, a submodule fetch can fail to
+      # reach its pinned commit if that submodule has moved far ahead
+      # (verified locally against content-modules/opentelemetry-java-instrumentation).
+      # An empty-but-set depth arg means a full, unbounded fetch — slower, but
+      # reliable. Kept on the later `_prebuild` step too, since it calls
+      # `get:submodule` again (idempotent — submodules are already checked out
+      # by then).
+      - name: Prepare (Hugo binary, theme deps, submodules)
+        run: npm run ci:prepare
+        env:
+          DEPTH: ' '
+
+      - name: Prebuild (spec content, config types)
         run: npm run _prebuild
         env:
           DEPTH: ' '
