@@ -5,9 +5,10 @@ default_lang_commit: 4edfbfc2ff38123678ca63eca95de94ede457623
 ---
 
 오픈텔레메트리(OpenTelemetry) 컬렉터는 텔레메트리를 처리하고 내보내는 과정에서
-데이터 손실을 최소화하도록 구성 요소와 설정을 설계했다. 하지만
-복원력(resilience) 있는 옵저버빌리티(observability) 파이프라인을 위해서는 데이터
-손실이 발생할 수 있는 시나리오와 이를 완화하는 방법을 이해하는 것이 중요하다.
+데이터 손실을 최소화하도록 구성 요소와 구성(configuration)으로 설계되었다.
+하지만 복원력(resilience) 있는 옵저버빌리티(observability) 파이프라인을 위해서는
+데이터 손실이 발생할 수 있는 시나리오와 이를 완화하는 방법을 이해하는 것이
+중요하다.
 
 ## 컬렉터 복원력 이해하기 {#understanding-collector-resilience}
 

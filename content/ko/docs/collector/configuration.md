@@ -1,7 +1,7 @@
 ---
-title: 설정
+title: 구성
 weight: 20
-description: 필요에 맞게 컬렉터를 설정하는 방법을 알아본다
+description: 필요에 맞게 컬렉터를 구성하는 방법을 알아본다
 # prettier-ignore
 cSpell:ignore: cfssl cfssljson configtls fluentforward gencert genkey initca oidc pprof prodevent prometheusremotewrite spanevents unredacted upsert zpages
 default_lang_commit: 30b7dbbdd94cec0b2a0c99317272b103315518bf

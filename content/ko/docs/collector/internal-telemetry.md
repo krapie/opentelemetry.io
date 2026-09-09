@@ -597,22 +597,22 @@ deprecated와 deleted 단계는 안정성 레벨이 아니라 생명 주기 상�
 오픈텔레메트리 Go 계측 라이브러리에서 생성된 것을 포함한 서드파티 메트릭에는 이
 성숙도 레벨이 적용되지 않는다.
 
-#### Development {#development}
+#### 개발 중(Development) {#development}
 
 Development 메트릭은 아직 활발히 개발 중이며 어느 릴리스에서든 변경될 수 있다.
 
-#### Alpha {#alpha}
+#### 알파(Alpha) {#alpha}
 
 Alpha 메트릭은 안정성이 보장되지 않는다. 이 메트릭들은 언제든지 수정되거나
 삭제될 수 있다.
 
-#### Beta {#beta}
+#### 베타(Beta) {#beta}
 
 Beta 메트릭은 릴리스 간에 여전히 변경될 수 있지만, 구성 요소 소유자는 호환성이
 깨지는 변경을 최소화하려고 노력해야 한다. 이 단계는 더 폭넓은 사용을 장려하며
 `stable` 이전의 마지막 단계이다.
 
-#### Stable {#stable}
+#### 안정(Stable) {#stable}
 
 Stable 메트릭은 변경되지 않을 것이 보장된다. 이는 다음을 의미한다.
 
@@ -620,7 +620,7 @@ Stable 메트릭은 변경되지 않을 것이 보장된다. 이는 다음을 �
   변경되지 않는다.
 - stable 메트릭의 타입과 속성은 수정되지 않는다.
 
-#### Deprecated {#deprecated}
+#### 지원 중단(Deprecated) {#deprecated}
 
 Deprecated 메트릭은 삭제가 예정되어 있지만 여전히 사용할 수 있다. 이러한
 메트릭의 설명에는 지원 중단된 버전에 대한 주석이 포함된다. 예를 들면 다음과
@@ -642,7 +642,7 @@ otelcol_exporter_queue_size 0
 otelcol_exporter_queue_size 0
 ```
 
-#### Deleted {#deleted}
+#### 삭제됨(Deleted) {#deleted}
 
 Deleted 메트릭은 더 이상 게시되지 않으며 사용할 수 없다.
 
