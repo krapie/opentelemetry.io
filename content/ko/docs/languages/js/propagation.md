@@ -10,7 +10,7 @@ default_lang_commit: 2b99811a310f2749a5b6389f5e4d654a4f2e2f8e
 
 {{% include esm-support-note.md %}}
 
-## 자동 컨텍스트 전파
+## 자동 컨텍스트 전파 {#automatic-context-propagation}
 
 [`@opentelemetry/instrumentation-http`](https://www.npmjs.com/package/@opentelemetry/instrumentation-http)나
 [`@opentelemetry/instrumentation-express`](https://www.npmjs.com/package/@opentelemetry/instrumentation-express)
@@ -199,7 +199,7 @@ traceId(`cccd19c3a2d10e589f01bfe2dc896dc2`)와 ID(`6f64ce484217a7bf`)를
 이제 클라이언트와 서버 애플리케이션이 서로 연결된 스팬을 성공적으로 보고한다.
 지금 둘 다 백엔드로 전송하면, 시각화 화면에서 이 의존 관계를 보여준다.
 
-## 수동 컨텍스트 전파
+## 수동 컨텍스트 전파 {#manual-context-propagation}
 
 경우에 따라 앞 절에서 설명한 것처럼 컨텍스트를 자동으로 전파할 수 없을 때가
 있다. 서비스 간 통신에 사용하는 라이브러리에 맞는 계측 라이브러리가 없을 수도
@@ -208,7 +208,7 @@ traceId(`cccd19c3a2d10e589f01bfe2dc896dc2`)와 ID(`6f64ce484217a7bf`)를
 컨텍스트를 수동으로 전파해야 한다면,
 [컨텍스트 API](/docs/languages/js/context)를 사용할 수 있다.
 
-### 일반적인 예제
+### 일반적인 예제 {#generic-example}
 
 다음의 일반적인 예제는 트레이스 컨텍스트를 수동으로 전파하는 방법을 보여준다.
 
@@ -347,7 +347,7 @@ trace.setSpan(activeContext, span);
 [Context](/docs/languages/js/context) API를 사용해 역직렬화된 컨텍스트를 다른
 방식으로 수정하거나 설정할 수도 있다.
 
-### 커스텀 프로토콜 예제
+### 커스텀 프로토콜 예제 {#custom-protocol-example}
 
 컨텍스트를 수동으로 전파해야 하는 흔한 사용 사례는 서비스 간 통신에 커스텀
 프로토콜을 사용하는 경우이다. 다음 예제는 기본적인 텍스트 기반 TCP 프로토콜을
@@ -536,7 +536,7 @@ node --import ./instrumentation.mjs client.js
 [수동 예제](#manual-context-propagation)와 마찬가지로, 스팬은 `traceId`와
 `id`/`parentId`를 사용해 연결된다.
 
-## 다음 단계
+## 다음 단계 {#next-steps}
 
 전파에 대해 더 알아보려면
 [전파자 API 명세](/docs/specs/otel/context/api-propagators/)를 읽어본다.

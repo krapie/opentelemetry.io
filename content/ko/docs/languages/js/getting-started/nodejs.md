@@ -63,7 +63,7 @@ npm install express
 
 {{% /tab %}} {{< /tabpane >}}
 
-### Create and launch an HTTP Server
+### HTTP 서버 생성 및 실행 {#create-and-launch-an-http-server}
 
 `app.ts`(TypeScript를 사용하지 않는다면 `app.js`)라는 이름의 파일을 생성하고
 다음 코드를 추가한다.

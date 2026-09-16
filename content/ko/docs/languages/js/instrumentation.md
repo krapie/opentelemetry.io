@@ -58,7 +58,7 @@ npm install express
 
 {{% /tab %}} {{< /tabpane >}}
 
-### Create and launch an HTTP Server
+### HTTP 서버 생성 및 실행 {#create-and-launch-an-http-server}
 
 _라이브러리_를 계측하는 것과 독립형 _앱_을 계측하는 것의 차이를 보여주기 위해,
 주사위 굴리기 로직을 _라이브러리 파일_로 분리하고, 이를 _앱 파일_에서 의존성으로
@@ -181,9 +181,9 @@ Listening for requests on http://localhost:8080
 
 {{% /tab %}} {{< /tabpane >}}
 
-## 수동 계측 설정
+## 수동 계측 설정 {#manual-instrumentation-setup}
 
-### 의존성
+### 의존성 {#dependencies}
 
 오픈텔레메트리 API 패키지를 설치한다.
 
@@ -191,7 +191,7 @@ Listening for requests on http://localhost:8080
 npm install @opentelemetry/api @opentelemetry/resources @opentelemetry/semantic-conventions
 ```
 
-### SDK 초기화
+### SDK 초기화 {#initialize-the-sdk}
 
 > [!NB] 라이브러리를 계측하는 경우 **이 단계를 건너뛴다**.
 
@@ -307,9 +307,9 @@ node --import ./instrumentation.mjs app.js
 라이브러리를 등록할 수 있다. 자세한 내용은
 [라이브러리](/docs/languages/js/libraries/)를 참고한다.
 
-## 트레이스
+## 트레이스 {#traces}
 
-### 트레이싱 초기화
+### 트레이싱 초기화 {#initialize-tracing}
 
 > [!NB] 라이브러리를 계측하는 경우 **이 단계를 건너뛴다**.
 
@@ -323,13 +323,13 @@ node --import ./instrumentation.mjs app.js
 브라우저에서 모든 SDK 초기화 코드를 포함하도록 `instrumentation.ts`(또는
 `instrumentation.js`) 파일을 수정한다.
 
-#### Node.js
+#### Node.js {#nodejs}
 
 위에서 [SDK 초기화](#initialize-the-sdk) 안내를 따라했다면, 이미
 `TracerProvider`가 설정되어 있다. 이제 [트레이서 얻기](#acquiring-a-tracer)로
 넘어가면 된다.
 
-#### 브라우저
+#### 브라우저 {#browser}
 
 {{% include browser-instrumentation-warning.md %}}
 
@@ -421,7 +421,7 @@ provider.register();
 이것만으로는 아직 앱에 아무 효과가 없다. 앱에서 텔레메트리가 방출되게 하려면
 [스팬을 생성](#create-spans)해야 한다.
 
-#### 알맞은 스팬 프로세서 선택하기
+#### 알맞은 스팬 프로세서 선택하기 {#picking-the-right-span-processor}
 
 기본적으로 Node SDK는 `BatchSpanProcessor`를 사용하며, Web SDK 예제에서도 이
 스팬 프로세서를 선택한다. `BatchSpanProcessor`는 스팬을 내보내기 전에 배치로
@@ -437,7 +437,7 @@ provider.register();
 대부분의 경우 `SimpleSpanProcessor`보다 `BatchSpanProcessor`를 사용하는 것이
 좋다.
 
-### 트레이서 얻기
+### 트레이서 얻기 {#acquiring-a-tracer}
 
 애플리케이션에서 수동 트레이싱 코드를 작성하는 곳이라면 어디서든 `getTracer`를
 호출해 트레이서를 얻어야 한다. 예를 들면 다음과 같다.
@@ -594,7 +594,7 @@ module.exports = { rollTheDice };
 
 {{% /tab %}} {{< /tabpane >}}
 
-### 스팬 생성하기
+### 스팬 생성하기 {#create-spans}
 
 이제 [트레이서](/docs/concepts/signals/traces/#tracer)가 초기화되었으니
 [스팬](/docs/concepts/signals/traces/#spans)을 생성할 수 있다.
@@ -703,7 +703,7 @@ node --import ./instrumentation.mjs app.js
 }
 ```
 
-### 중첩된 스팬 생성하기
+### 중첩된 스팬 생성하기 {#create-nested-spans}
 
 중첩된 [스팬](/docs/concepts/signals/traces/#spans)을 사용하면 본질적으로 중첩된
 작업을 추적할 수 있다. 예를 들어 아래의 `rollOnce()` 함수는 중첩된 연산을
@@ -802,7 +802,7 @@ function rollTheDice(rolls, min, max) {
 }
 ```
 
-### 독립적인 스팬 생성하기
+### 독립적인 스팬 생성하기 {#create-independent-spans}
 
 앞의 예제들은 활성 스팬을 생성하는 방법을 보여주었다. 경우에 따라 중첩되지 않고
 서로 형제 관계인 비활성 스팬을 생성하고 싶을 수도 있다.
@@ -828,7 +828,7 @@ const doWork = () => {
 이런 구조는 함께 그룹화되어 있지만 개념적으로는 서로 독립적인 작업 단위가 있을
 때 유용할 수 있다.
 
-### 현재 스팬 얻기
+### 현재 스팬 얻기 {#get-the-current-span}
 
 프로그램 실행 중 특정 시점에 현재/활성
 [스팬](/docs/concepts/signals/traces/#spans)으로 무언가를 수행하는 것이 유용할
@@ -840,7 +840,7 @@ const activeSpan = opentelemetry.trace.getActiveSpan();
 // do something with the active span, optionally ending it if that is appropriate for your use case.
 ```
 
-### 컨텍스트에서 스팬 얻기
+### 컨텍스트에서 스팬 얻기 {#get-a-span-from-context}
 
 반드시 활성 스팬이 아니더라도, 주어진 컨텍스트에서
 [스팬](/docs/concepts/signals/traces/#spans)을 얻는 것이 유용할 수도 있다.
@@ -852,7 +852,7 @@ const span = opentelemetry.trace.getSpan(ctx);
 // do something with the acquired span, optionally ending it if that is appropriate for your use case.
 ```
 
-### 속성
+### 속성 {#attributes}
 
 [속성](/docs/concepts/signals/traces/#attributes)을 사용하면
 [`Span`](/docs/concepts/signals/traces/#spans)에 키/값 쌍을 첨부하여, 추적 중인
@@ -936,7 +936,7 @@ function rollTheDice(rolls, min, max) {
 
 {{% /tab %}} {{< /tabpane >}}
 
-#### 시맨틱 속성
+#### 시맨틱 속성 {#semantic-attributes}
 
 HTTP나 데이터베이스 호출처럼 잘 알려진 프로토콜에서의 작업을 나타내는 스팬에는
 시맨틱 컨벤션이 존재한다. 이러한 스팬에 대한 시맨틱 컨벤션은 명세의
@@ -986,7 +986,7 @@ const doWork = () => {
 };
 ```
 
-### 스팬 이벤트
+### 스팬 이벤트 {#span-events}
 
 [스팬 이벤트](/docs/concepts/signals/traces/#span-events)는
 [`Span`](/docs/concepts/signals/traces/#spans)에 남기는, 사람이 읽을 수 있는
@@ -1010,7 +1010,7 @@ span.addEvent('some log', {
 });
 ```
 
-### 스팬 링크
+### 스팬 링크 {#span-links}
 
 [`Span`](/docs/concepts/signals/traces/#spans)은 인과적으로 관련된 다른
 스팬으로의 [`Link`](/docs/concepts/signals/traces/#span-links)를 0개 이상 가지고
@@ -1035,7 +1035,7 @@ const someFunction = (spanToLinkFrom) => {
 };
 ```
 
-### 스팬 상태
+### 스팬 상태 {#span-status}
 
 {{% include "span-status-preamble.md" %}}
 
@@ -1083,7 +1083,7 @@ tracer.startActiveSpan('app.doWork', (span) => {
 
 {{% /tab %}} {{< /tabpane >}}
 
-### 예외 기록하기
+### 예외 기록하기 {#recording-exceptions}
 
 예외가 발생했을 때 이를 기록해두는 것이 좋다. 이는 [스팬 상태](#span-status)
 설정과 함께 하는 것이 권장된다.
@@ -1244,14 +1244,14 @@ const doWork = (parent, i) => {
 `sdk-trace-base`를 사용할 때도 다른 모든 API는 Node.js나 Web SDK를 사용할 때와
 동일하게 동작한다.
 
-## 메트릭
+## 메트릭 {#metrics}
 
 [메트릭](/docs/concepts/signals/metrics)은 개별 측정값을 집계로 결합하여, 시스템
 부하에 대한 함수로서 일정한 데이터를 만들어낸다. 집계는 낮은 수준의 문제를
 진단하는 데 필요한 세부 정보는 부족하지만, 추세를 파악하고 애플리케이션 런타임
 텔레메트리를 제공함으로써 스팬을 보완한다.
 
-### 메트릭 초기화
+### 메트릭 초기화 {#initialize-metrics}
 
 > [!NB] 라이브러리를 계측하는 경우 **이 단계를 건너뛴다**.
 
@@ -1388,7 +1388,7 @@ node --import ./instrumentation.mjs app.js
 
 이제 `MeterProvider`가 구성되었으니 `Meter`를 얻을 수 있다.
 
-### 미터 얻기
+### 미터 얻기 {#acquiring-a-meter}
 
 애플리케이션에서 수동으로 계측한 코드가 있는 곳이라면 어디서든 `getMeter`를
 호출해 미터를 얻을 수 있다. 예를 들면 다음과 같다.
@@ -1551,7 +1551,7 @@ module.exports = { rollTheDice };
 [메트릭 계측기](/docs/concepts/signals/metrics/#metric-instruments)를 생성할 수
 있다.
 
-### 카운터 사용하기
+### 카운터 사용하기 {#using-counters}
 
 카운터는 음수가 아니며 증가하는 값을 측정하는 데 사용할 수 있다.
 
@@ -1583,7 +1583,7 @@ function rollOnce(min, max) {
 
 {{% /tab %}} {{< /tabpane >}}
 
-### UpDown 카운터 사용하기
+### UpDown 카운터 사용하기 {#using-updown-counters}
 
 UpDown 카운터는 증가와 감소가 모두 가능하여, 오르내리는 누적 값을 관측할 수 있게
 해준다.
@@ -1600,7 +1600,7 @@ counter.add(1);
 counter.add(-1);
 ```
 
-### 히스토그램 사용하기
+### 히스토그램 사용하기 {#using-histograms}
 
 히스토그램은 시간에 따른 값의 분포를 측정하는 데 사용된다.
 
@@ -1651,7 +1651,7 @@ app.get('/', (_req, _res) => {
 
 {{% /tab %}} {{< /tabpane >}}
 
-### 관측 가능한(비동기) 카운터 사용하기
+### 관측 가능한(비동기) 카운터 사용하기 {#using-observable-async-counters}
 
 관측 가능한 카운터는 가산적이고, 음수가 아니며, 단조 증가하는 값을 측정하는 데
 사용할 수 있다.
@@ -1672,7 +1672,7 @@ counter.addCallback((result) => {
 //... calls to addEvent
 ```
 
-### 관측 가능한(비동기) UpDown 카운터 사용하기
+### 관측 가능한(비동기) UpDown 카운터 사용하기 {#using-observable-async-updown-counters}
 
 관측 가능한 UpDown 카운터는 증가와 감소가 모두 가능하여, 가산적이고 음수가
 아니며 비단조적으로 증가하는 누적 값을 측정할 수 있게 해준다.
@@ -1697,7 +1697,7 @@ counter.addCallback((result) => {
 //... calls to addEvent and removeEvent
 ```
 
-### 관측 가능한(비동기) 게이지 사용하기
+### 관측 가능한(비동기) 게이지 사용하기 {#using-observable-async-gauges}
 
 관측 가능한 게이지는 비가산적인 값을 측정하는 데 사용해야 한다.
 
@@ -1713,7 +1713,7 @@ gauge.addCallback((result) => {
 //... temperature variable is modified by a sensor
 ```
 
-### 계측기 설명하기
+### 계측기 설명하기 {#describing-instruments}
 
 카운터, 히스토그램 등의 계측기를 생성할 때 설명을 부여할 수 있다.
 
@@ -1737,7 +1737,7 @@ JavaScript에서 각 설정 값은 다음을 의미한다.
 
 생성하는 각 계측기마다 설명을 붙이는 것이 일반적으로 권장된다.
 
-### 속성 추가하기
+### 속성 추가하기 {#adding-attributes}
 
 메트릭이 생성될 때 속성을 추가할 수 있다.
 
@@ -1747,12 +1747,12 @@ const counter = myMeter.createCounter('my.counter');
 counter.add(1, { 'some.optional.attribute': 'some value' });
 ```
 
-### 메트릭 뷰 구성하기
+### 메트릭 뷰 구성하기 {#configure-metric-views}
 
 메트릭 뷰(View)는 개발자가 메트릭 SDK에서 노출하는 메트릭을 커스터마이즈할 수
 있게 해준다.
 
-#### 셀렉터
+#### 셀렉터 {#selectors}
 
 뷰를 인스턴스화하려면 먼저 대상 계측기를 선택해야 한다. 메트릭에 사용할 수 있는
 셀렉터는 다음과 같다.
@@ -1767,7 +1767,7 @@ counter.add(1, { 'some.optional.attribute': 'some value' });
 사용해 모든 계측기를 선택하거나 `http*`를 사용해 이름이 `http`로 시작하는 모든
 계측기를 선택할 수 있다.
 
-#### 예제
+#### 예제 {#examples}
 
 모든 메트릭 유형에서 속성을 필터링하는 예이다.
 
@@ -1803,7 +1803,7 @@ const histogramView = {
 };
 ```
 
-#### 미터 프로바이더에 연결하기
+#### 미터 프로바이더에 연결하기 {#attach-to-meter-provider}
 
 뷰를 구성했다면, 해당 미터 프로바이더에 연결한다.
 
@@ -1813,11 +1813,11 @@ const meterProvider = new MeterProvider({
 });
 ```
 
-## 로그
+## 로그 {#logs}
 
 로그 API 및 SDK는 현재 개발 중이다.
 
-## 다음 단계
+## 다음 단계 {#next-steps}
 
 또한 하나 이상의 텔레메트리 백엔드로
 [텔레메트리 데이터를 내보내](/docs/languages/js/exporters)도록 적절한 익스포터를
